@@ -3,6 +3,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 //components
 import { Loader } from "./components/shared";
+import { Header } from "./components/layout";
 
 //admin components
 const Dashboard = lazy(() => import("./components/pages/admin/dashboard"));
@@ -40,6 +41,8 @@ const App = () => {
   return (
     <Router>
       {/* header */}
+      <Header />
+
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Home />} />
