@@ -1,3 +1,4 @@
+import { signOut } from "firebase/auth";
 import React, { useState } from "react";
 import {
   FaSearch,
@@ -10,49 +11,62 @@ import { Link } from "react-router-dom";
 
 const user = {
   _id: "yo",
-  role: "user",
+  role: "admin",
 };
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+
+  const handleLogout = async () => {
+    setIsDialogOpen(false);
+    // try {
+    //   await signOut(auth);
+    //   toast.success("Sign Out Successfully");
+    //   setIsOpen(false);
+    // } catch (error) {
+    //   toast.error("Sign Out Fail");
+    // }
+  };
+
   return (
-    <nav>
+    <nav className="header">
       {" "}
-      <Link onClick={() => setIsOpen(false)} to={"/"}>
+      <Link onClick={() => setIsDialogOpen(false)} to={"/"}>
         HOME
       </Link>
-      <Link onClick={() => setIsOpen(false)} to={"/search"}>
+      <Link onClick={() => setIsDialogOpen(false)} to={"/search"}>
         <FaSearch />
       </Link>
-      <Link onClick={() => setIsOpen(false)} to={"/cart"}>
+      <Link onClick={() => setIsDialogOpen(false)} to={"/cart"}>
         <FaShoppingBag />
       </Link>
       {user._id ? (
         <>
-          <button>
+          <button onClick={() => setIsDialogOpen((prev) => !prev)}>
             <FaUser />
           </button>
-          <dialog open={true}>
+          <dialog open={isDialogOpen}>
             <div>
               {user.role === "admin" && (
-                <Link onClick={() => setIsOpen(false)} to="/admin/dashboard">
+                <Link
+                  onClick={() => setIsDialogOpen(false)}
+                  to="/admin/dashboard"
+                >
                   Admin
                 </Link>
               )}
 
-              <Link onClick={() => setIsOpen(false)} to="/orders">
+              <Link onClick={() => setIsDialogOpen(false)} to="/orders">
                 Orders
               </Link>
-              <button
-              //   onClick={logoutHandler}
-              >
+              <button onClick={handleLogout}>
                 <FaSignOutAlt />
               </button>
             </div>
           </dialog>
         </>
       ) : (
-        <Link onClick={() => setIsOpen(false)} to={"/login"}>
+        <Link onClick={() => setIsDialogOpen(false)} to={"/login"}>
           <FaSignInAlt />
         </Link>
       )}
