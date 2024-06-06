@@ -1,5 +1,5 @@
 import React from "react";
-import { TProductsProps } from "../../../@types/product.types";
+import { TProductsProps } from "../../../@types/props/product.types";
 import { FaPlus } from "react-icons/fa";
 
 const server = "asdasdasd";
