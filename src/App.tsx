@@ -39,6 +39,9 @@ const Cart = lazy(() => import("./components/pages/cart/Cart"));
 const Shipping = lazy(() => import("./components/pages/shipping/Shipping"));
 const Login = lazy(() => import("./components/pages/login/Login"));
 const Orders = lazy(() => import("./components/pages/orders/Orders"));
+const OrderDetails = lazy(
+  () => import("./components/pages/orderDetails/OrderDetails")
+);
 
 const App = () => {
   return (
@@ -59,6 +62,7 @@ const App = () => {
           <Route>
             <Route path="/shipping" element={<Shipping />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/orders/:id" element={<OrderDetails />} />
           </Route>
 
           {/* admin routes*/}

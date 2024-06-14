@@ -14,7 +14,7 @@ const Orders = () => {
       discount: 150,
 
       status: <span className="red">process</span>,
-      action: <Link to={`/order/asdas`}>view</Link>,
+      action: <Link to={`/orders/asdas`}>view</Link>,
     },
   ]);
 

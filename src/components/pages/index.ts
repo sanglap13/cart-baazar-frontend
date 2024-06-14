@@ -4,3 +4,4 @@ export { default as Cart } from "./cart/Cart";
 export { default as Shipping } from "./shipping/Shipping";
 export { default as Login } from "./login/Login";
 export { default as Orders } from "./orders/Orders";
+export { default as OrderDetails } from "./orderDetails/OrderDetails";
