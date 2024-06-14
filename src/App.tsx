@@ -37,6 +37,7 @@ const Home = lazy(() => import("./components/pages/home/Home"));
 const Search = lazy(() => import("./components/pages/search/Search"));
 const Cart = lazy(() => import("./components/pages/cart/Cart"));
 const Shipping = lazy(() => import("./components/pages/shipping/Shipping"));
+const Login = lazy(() => import("./components/pages/login/Login"));
 
 const App = () => {
   return (
@@ -49,6 +50,9 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<Cart />} />
+
+          {/* Not logged In */}
+          <Route path="/login" element={<Login />} />
 
           {/* Logged In User Routes */}
           <Route>
