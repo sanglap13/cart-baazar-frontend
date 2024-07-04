@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 //components
 import { Loader } from "./components/shared";
@@ -97,6 +98,7 @@ const App = () => {
           </Route>
         </Routes>
       </Suspense>
+      <Toaster position="bottom-center" />
     </Router>
   );
 };
