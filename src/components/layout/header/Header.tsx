@@ -8,24 +8,22 @@ import {
   FaUser,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { IHeaderProps } from "../../../@types/props/header.types";
+import { auth } from "../../../config/firebase.config";
+import toast from "react-hot-toast";
 
-const user = {
-  _id: "",
-  role: "",
-};
-
-const Header = () => {
+const Header = ({ user }: IHeaderProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   const handleLogout = async () => {
     setIsDialogOpen(false);
-    // try {
-    //   await signOut(auth);
-    //   toast.success("Sign Out Successfully");
-    //   setIsOpen(false);
-    // } catch (error) {
-    //   toast.error("Sign Out Fail");
-    // }
+    try {
+      await signOut(auth);
+      toast.success("Sign Out Successfully");
+      setIsDialogOpen(false);
+    } catch (error) {
+      toast.error("Sign Out Fail");
+    }
   };
 
   return (
@@ -40,7 +38,7 @@ const Header = () => {
       <Link onClick={() => setIsDialogOpen(false)} to={"/cart"}>
         <FaShoppingBag />
       </Link>
-      {user._id ? (
+      {user?._id ? (
         <>
           <button onClick={() => setIsDialogOpen((prev) => !prev)}>
             <FaUser />

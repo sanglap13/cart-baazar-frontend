@@ -1,10 +1,16 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./config/firebase.config";
+import { userExist, userNotExist } from "./redux/reducer/userReducer";
 
 //components
 import { Loader } from "./components/shared";
 import { Header } from "./components/layout";
+import { getUser } from "./redux/api/userApi";
+import { RootState } from "./redux/store";
 
 //admin components
 const Dashboard = lazy(() => import("./components/pages/admin/dashboard"));
@@ -45,10 +51,26 @@ const OrderDetails = lazy(
 );
 
 const App = () => {
-  return (
+  const { user, loading } = useSelector(
+    (state: RootState) => state.userReducer
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const data = await getUser(user.uid);
+        dispatch(userExist(data.user));
+      } else dispatch(userNotExist());
+    });
+  }, []);
+  return loading ? (
+    <Loader />
+  ) : (
     <Router>
       {/* header */}
-      <Header />
+      <Header user={user} />
 
       <Suspense fallback={<Loader />}>
         <Routes>
