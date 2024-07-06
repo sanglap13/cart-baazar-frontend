@@ -1,16 +1,16 @@
-import React, { Suspense, lazy, useEffect } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { Suspense, lazy, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { onAuthStateChanged } from "firebase/auth";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { auth } from "./config/firebase.config";
 import { userExist, userNotExist } from "./redux/reducer/userReducer";
+import { RootState } from "./redux/store";
 
 //components
+import { Header, ProtectedRoutes } from "./components/layout";
 import { Loader } from "./components/shared";
-import { Header } from "./components/layout";
 import { getUser } from "./redux/api/userApi";
-import { RootState } from "./redux/store";
 
 //admin components
 const Dashboard = lazy(() => import("./components/pages/admin/dashboard"));
@@ -49,6 +49,7 @@ const Orders = lazy(() => import("./components/pages/orders/Orders"));
 const OrderDetails = lazy(
   () => import("./components/pages/orderDetails/OrderDetails")
 );
+const NotFound = lazy(() => import("./components/pages/notFound/NotFound"));
 
 const App = () => {
   const { user, loading } = useSelector(
@@ -79,10 +80,19 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
 
           {/* Not logged In */}
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/login"
+            element={
+              <ProtectedRoutes isAuthenticated={user ? false : true}>
+                <Login />
+              </ProtectedRoutes>
+            }
+          />
 
           {/* Logged In User Routes */}
-          <Route>
+          <Route
+            element={<ProtectedRoutes isAuthenticated={user ? true : false} />}
+          >
             <Route path="/shipping" element={<Shipping />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/orders/:id" element={<OrderDetails />} />
@@ -91,9 +101,13 @@ const App = () => {
           {/* admin routes*/}
 
           <Route
-          // element={
-          //   <ProtectedRoute isAuthenticated={true} adminRoute={true} isAdmin={true} />
-          // }
+            element={
+              <ProtectedRoutes
+                isAuthenticated={true}
+                adminOnly={true}
+                admin={user?.role === "admin" ? true : false}
+              />
+            }
           >
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/product" element={<Products />} />
@@ -117,6 +131,7 @@ const App = () => {
               path="/admin/transaction/:id"
               element={<TransactionManagement />}
             />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </Suspense>
