@@ -3,8 +3,7 @@ import { TProductsProps } from "../../../@types/props/product.types";
 import { FaExpandAlt, FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { transformImage } from "../../../utils/tranformImage";
-
-const server = "asdasdasd";
+import { server } from "../../../redux/store";
 
 const ProductCard: React.FC<TProductsProps> = ({
   productId,
@@ -16,7 +15,9 @@ const ProductCard: React.FC<TProductsProps> = ({
 }) => {
   return (
     <div className="product-card">
-      <img src={transformImage(photos?.[0]?.url, 400)} alt={name} />
+      {/* <img src={transformImage(photos?.[0]?.url, 400)} alt={name} /> */}
+      <img src={`${server}/${photos}`} alt={name} />
+
       <p>{name}</p>
       <span>₹{price}</span>
 
@@ -27,7 +28,7 @@ const ProductCard: React.FC<TProductsProps> = ({
               productId,
               price,
               name,
-              photo: photos[0].url,
+              photo: photos,
               stock,
               quantity: 1,
             })
