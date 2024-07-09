@@ -1,9 +1,15 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Column } from "react-table";
 import AdminSidebar from "../../../components/shared/admin/AdminSidebar";
 import TableHOC from "../../../components/shared/admin/TableHOC";
+import { useSelector } from "react-redux";
+import { useAllProductsQuery } from "../../../redux/api/productApi";
+import { RootState, server } from "../../../redux/store";
+import { TCustomError } from "../../../@types/api/api.types";
+import toast from "react-hot-toast";
+import { Skeleton } from "../../shared/loader/Loader";
 
 interface DataType {
   photo: ReactElement;
@@ -60,7 +66,16 @@ const arr: Array<DataType> = [
 ];
 
 const Products = () => {
+  const { user } = useSelector((state: RootState) => state.userReducer);
+
+  const { isLoading, isError, error, data } = useAllProductsQuery(user?._id!);
+
   const [rows, setRows] = useState<DataType[]>(arr);
+
+  if (isError) {
+    const err = error as TCustomError;
+    toast.error(err.data.message);
+  }
 
   const Table = TableHOC<DataType>(
     columns,
@@ -70,10 +85,24 @@ const Products = () => {
     rows.length > 6
   )();
 
+  useEffect(() => {
+    if (data)
+      setRows(
+        data.products.map((i) => ({
+          // photo: <img src={i.photos?.[0]?.url} />,
+          photo: <img src={`${server}/${i.photo}`} />,
+          name: i.name,
+          price: i.price,
+          stock: i.stock,
+          action: <Link to={`/admin/product/${i._id}`}>Manage</Link>,
+        }))
+      );
+  }, [data]);
+
   return (
     <div className="admin-container">
       <AdminSidebar />
-      <main>{Table}</main>
+      <main>{isLoading ? <Skeleton length={20} /> : Table}</main>
       <Link to="/admin/product/new" className="create-product-btn">
         <FaPlus />
       </Link>
