@@ -1,14 +1,23 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { ProductCard } from "../../shared";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
+import { useLatestProductsQuery } from "../../../redux/api/productApi";
+import { ProductCard } from "../../shared";
 
 const Home = () => {
+  const { data, isError, isLoading } = useLatestProductsQuery("");
+
   const handleAddToCart = (cartItem: any) => {
     if (cartItem.stock < 1) return toast.error("Out of Stock");
     // dispatch(addToCart(cartItem));
     toast.success("Added to cart");
   };
+
+  if (isError) toast.error("Cannot Fetch the Products");
+
+  const coverMessage =
+    "Fashion isn't just clothes; it's a vibrant language. Silhouettes and textures speak volumes, a conversation starter with every bold print. It's a way to tell our story, a confidence booster, or a playful exploration. From elegance to rebellion, fashion lets us navigate the world in style.".split(
+      " "
+    );
 
   return (
     <div className="home">
@@ -24,7 +33,8 @@ const Home = () => {
       <main>
         {/* {isLoading ? (
           <Skeleton width="80vw" />
-        ) : (
+        ) : ( */}
+        {
           data?.products.map((i) => (
             <ProductCard
               key={i._id}
@@ -32,18 +42,19 @@ const Home = () => {
               name={i.name}
               price={i.price}
               stock={i.stock}
-              handler={addToCartHandler}
-              photo={i.photo}
+              handler={handleAddToCart}
+              photos={i.photos}
             />
           ))
-        )} */}
+          // )
+        }
         <ProductCard
           productId="123"
           name="name"
           price={123}
           stock={123}
-          handler={() => console.log("clicked")}
-          photo="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/mba13-midnight-select-202402?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1708367688034"
+          handler={handleAddToCart}
+          photos={[] as any}
         />
       </main>
     </div>
