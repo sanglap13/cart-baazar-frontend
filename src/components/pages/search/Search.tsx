@@ -1,15 +1,65 @@
 import React, { useState } from "react";
 import { ProductCard } from "../../shared";
+import { useSearchParams } from "react-router-dom";
+import {
+  useCategoriesQuery,
+  useSearchProductsQuery,
+} from "../../../redux/api/productApi";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { TCartItem } from "../../../@types/interfaces/cart.types";
+import { TCustomError } from "../../../@types/api/api.types";
+import { Skeleton } from "../../shared/loader/Loader";
 
 const Search = () => {
+  const searchQuery = useSearchParams()[0];
+
   const [search, setSearch] = useState<string>("");
   const [sort, setSort] = useState<string>("");
   const [maxPrice, setMaxPrice] = useState<number>(100000);
   const [category, setCategory] = useState<string>("");
   const [page, setPage] = useState<number>(1);
 
+  const {
+    data: categoriesResponse,
+    isLoading: loadingCategories,
+    isError,
+    error,
+  } = useCategoriesQuery("");
+
+  const {
+    isLoading: productLoading,
+    data: searchedData,
+    isError: productIsError,
+    error: productError,
+  } = useSearchProductsQuery({
+    search,
+    sort,
+    category,
+    page,
+    price: maxPrice,
+  });
+
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (cartItem: TCartItem) => {
+    if (cartItem.stock < 1) return toast.error("Out of Stock");
+    // dispatch(addToCart(cartItem));
+    toast.success("Added to cart");
+  };
+
   const isPrevPage: boolean = page > 1;
   const isNextPage: boolean = page < 4;
+
+  if (isError) {
+    const err = error as TCustomError;
+    toast.error(err.data.message);
+  }
+
+  if (productIsError) {
+    const err = productError as TCustomError;
+    toast.error(err.data.message);
+  }
 
   return (
     <div className="product-search-page">
@@ -42,12 +92,12 @@ const Search = () => {
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value="">ALL</option>
-            {/* {!loadingCategories &&
+            {!loadingCategories &&
               categoriesResponse?.categories.map((i) => (
                 <option key={i} value={i}>
                   {i.toUpperCase()}
                 </option>
-              ))} */}
+              ))}
           </select>
         </div>
       </aside>
@@ -59,18 +109,8 @@ const Search = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <div className="search-product-list">
-          <ProductCard
-            productId="123"
-            name="name"
-            price={123}
-            stock={123}
-            handler={() => console.log("clicked")}
-            photo="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/mba13-midnight-select-202402?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1708367688034"
-          />
-        </div>
 
-        {/* {productLoading ? (
+        {productLoading ? (
           <Skeleton length={10} />
         ) : (
           <div className="search-product-list">
@@ -81,12 +121,12 @@ const Search = () => {
                 name={i.name}
                 price={i.price}
                 stock={i.stock}
-                handler={addToCartHandler}
-                photo={i.photo}
+                handler={handleAddToCart}
+                photos={i.photo}
               />
-            ))} 
+            ))}
           </div>
-        )} */}
+        )}
 
         {/* {searchedData && searchedData.totalPage > 1 && (
           <article>

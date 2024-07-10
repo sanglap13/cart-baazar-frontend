@@ -38,21 +38,23 @@ export type TAllProductsResponse = {
 //   success: boolean;
 //   reviews: Review[];
 // };
-// export type CategoriesResponse = {
-//   success: boolean;
-//   categories: string[];
-// };
 
-// export type SearchProductsResponse = AllProductsResponse & {
-//   totalPage: number;
-// };
-// export type SearchProductsRequest = {
-//   price: number;
-//   page: number;
-//   category: string;
-//   search: string;
-//   sort: string;
-// };
+export type TCategoriesResponse = {
+  success: boolean;
+  categories: string[];
+};
+
+// ===========================search=============================
+export type TSearchProductsResponse = TAllProductsResponse & {
+  totalPage: number;
+};
+export type TSearchProductsRequest = {
+  price: number;
+  page: number;
+  category: string;
+  search: string;
+  sort: string;
+};
 // export type ProductResponse = {
 //   success: boolean;
 //   product: Product;
