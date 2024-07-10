@@ -128,7 +128,7 @@ const Search = () => {
           </div>
         )}
 
-        {/* {searchedData && searchedData.totalPage > 1 && (
+        {searchedData && searchedData.totalPage > 1 && (
           <article>
             <button
               disabled={!isPrevPage}
@@ -146,24 +146,7 @@ const Search = () => {
               Next
             </button>
           </article>
-        )} */}
-        <article>
-          <button
-            disabled={!isPrevPage}
-            onClick={() => setPage((prev) => prev - 1)}
-          >
-            Prev
-          </button>
-          <span>
-            {page} of {4}
-          </span>
-          <button
-            disabled={!isNextPage}
-            onClick={() => setPage((prev) => prev + 1)}
-          >
-            Next
-          </button>
-        </article>
+        )}
       </main>
     </div>
   );
