@@ -34,6 +34,11 @@ export type TAllProductsResponse = {
   success: boolean;
   products: TProduct[];
 };
+
+export type TNewProductRequest = {
+  id: string;
+  formData: FormData;
+};
 // export type AllReviewsResponse = {
 //   success: boolean;
 //   reviews: Review[];
@@ -99,11 +104,6 @@ export type TSearchProductsRequest = {
 // export type DeleteReviewRequest = {
 //   userId?: string;
 //   reviewId: string;
-// };
-
-// export type NewProductRequest = {
-//   id: string;
-//   formData: FormData;
 // };
 
 // export type UpdateProductRequest = {

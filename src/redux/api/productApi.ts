@@ -2,6 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   TAllProductsResponse,
   TCategoriesResponse,
+  TMessageResponse,
+  TNewProductRequest,
   TSearchProductsRequest,
   TSearchProductsResponse,
 } from "../../@types/api/api.types";
@@ -38,7 +40,7 @@ export const productAPI = createApi({
       },
       providesTags: ["product"],
     }),
-    // productDetails: builder.query<ProductResponse, string>({
+    // productDetails: builder.query<TProductResponse, string>({
     //   query: (id) => id,
     //   providesTags: ["product"],
     // }),
@@ -64,14 +66,14 @@ export const productAPI = createApi({
     //   }),
     //   invalidatesTags: ["product"],
     // }),
-    // newProduct: builder.mutation<MessageResponse, NewProductRequest>({
-    //   query: ({ formData, id }) => ({
-    //     url: `new?id=${id}`,
-    //     method: "POST",
-    //     body: formData,
-    //   }),
-    //   invalidatesTags: ["product"],
-    // }),
+    newProduct: builder.mutation<TMessageResponse, TNewProductRequest>({
+      query: ({ formData, id }) => ({
+        url: `new?id=${id}`,
+        method: "POST",
+        body: formData,
+      }),
+      invalidatesTags: ["product"],
+    }),
     // updateProduct: builder.mutation<MessageResponse, UpdateProductRequest>({
     //   query: ({ formData, userId, productId }) => ({
     //     url: `${productId}?id=${userId}`,
