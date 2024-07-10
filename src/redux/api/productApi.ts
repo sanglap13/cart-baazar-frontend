@@ -100,7 +100,7 @@ export const {
   useSearchProductsQuery,
   //   useNewReviewMutation,
   //   useDeleteReviewMutation,
-  //   useNewProductMutation,
+  useNewProductMutation,
   //   useProductDetailsQuery,
   //   useUpdateProductMutation,
   //   useDeleteProductMutation,
