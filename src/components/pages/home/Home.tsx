@@ -4,6 +4,8 @@ import { useLatestProductsQuery } from "../../../redux/api/productApi";
 import { ProductCard } from "../../shared";
 import { useDispatch } from "react-redux";
 import { Skeleton } from "../../shared/loader/Loader";
+import { TCartItem } from "../../../@types/interfaces/cart.types";
+import { addToCart } from "../../../redux/reducer/cartReducer";
 
 const Home = () => {
   const { data, isError, isLoading } = useLatestProductsQuery("");
@@ -11,9 +13,9 @@ const Home = () => {
 
   const dispatch = useDispatch();
 
-  const handleAddToCart = (cartItem: any) => {
+  const handleAddToCart = (cartItem: TCartItem) => {
     if (cartItem.stock < 1) return toast.error("Out of Stock");
-    // dispatch(addToCart(cartItem));
+    dispatch(addToCart(cartItem));
     toast.success("Added to cart");
   };
 

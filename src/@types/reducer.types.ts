@@ -1,3 +1,5 @@
+import { TCartItem } from "./interfaces/cart.types";
+import { TShippingInfo } from "./interfaces/shipping.types";
 import { TUser } from "./interfaces/user.types";
 
 export interface IUserReducerInitialState {
@@ -5,13 +7,13 @@ export interface IUserReducerInitialState {
   loading: boolean;
 }
 
-// export interface CartReducerInitialState {
-//     loading: boolean;
-//     cartItems: CartItem[];
-//     subtotal: number;
-//     tax: number;
-//     shippingCharges: number;
-//     discount: number;
-//     total: number;
-//     shippingInfo: ShippingInfo;
-//   }
+export interface ICartReducerInitialState {
+  loading: boolean;
+  cartItems: TCartItem[];
+  subtotal: number;
+  tax: number;
+  shippingCharges: number;
+  discount: number;
+  total: number;
+  shippingInfo: TShippingInfo;
+}

@@ -2,6 +2,7 @@ import React from "react";
 import { TCartItemProps } from "../../../@types/props/cart.types";
 import { FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { server } from "../../../redux/store";
 
 const CartItemCard: React.FC<TCartItemProps> = ({
   cartItem,
@@ -14,8 +15,8 @@ const CartItemCard: React.FC<TCartItemProps> = ({
   return (
     <div className="cart-item">
       <img
-        src={photo}
-        //   src={`${server}/${photo}`}
+        // src={photo}
+        src={`${server}/${photo}`}
         alt={name}
       />
       <article>

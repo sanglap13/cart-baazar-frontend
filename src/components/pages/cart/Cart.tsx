@@ -1,98 +1,83 @@
-import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { VscError } from "react-icons/vsc";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { TCartItem } from "../../../@types/interfaces/cart.types";
+import { RootState, server } from "../../../redux/store";
 import { CartItemCard } from "../../shared";
-import { TCartItem } from "../../../@types/props/cart.types";
-
-const cartItems = [
-  {
-    productId: "123",
-    name: "name",
-    price: 123,
-    stock: 123,
-    quantity: 1,
-    photo:
-      "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/mba13-midnight-select-202402?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1708367688034",
-  },
-  {
-    productId: "123",
-    name: "name",
-    price: 123,
-    stock: 123,
-    quantity: 1,
-    photo:
-      "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/mba13-midnight-select-202402?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1708367688034",
-  },
-  {
-    productId: "123",
-    name: "name",
-    price: 123,
-    stock: 123,
-    quantity: 1,
-    photo:
-      "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/mba13-midnight-select-202402?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1708367688034",
-  },
-];
-const subTotal = 4000;
-const tax = Math.round(subTotal * 0.18);
-const shippingCharges = 40;
-const discount = 200;
-const total = subTotal + tax + shippingCharges - discount;
+import {
+  addToCart,
+  calculatePrice,
+  removeCartItem,
+} from "../../../redux/reducer/cartReducer";
 
 const Cart = () => {
+  const { cartItems, subtotal, tax, total, shippingCharges, discount } =
+    useSelector((state: RootState) => state.cartReducer);
+
+  const dispatch = useDispatch();
+
   const [couponCode, setCouponCode] = useState<string>("");
   const [isValidCouponCode, setIsValidCouponCode] = useState<boolean>(false);
 
-  const incrementHandler = (cartItem: TCartItem) => {
-    // if (cartItem.quantity >= cartItem.stock) return;
-    // dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity + 1 }));
+  const handleIncrement = (cartItem: TCartItem) => {
+    if (cartItem.quantity >= cartItem.stock) return;
+    dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity + 1 }));
   };
-  const decrementHandler = (cartItem: TCartItem) => {
-    // if (cartItem.quantity <= 1) return;
-    // dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity - 1 }));
+  const handleDecrement = (cartItem: TCartItem) => {
+    if (cartItem.quantity <= 1) return;
+    dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity - 1 }));
   };
-  const removeHandler = (productId: string) => {
-    // dispatch(removeCartItem(productId));
+  const handleRemove = (productId: string) => {
+    dispatch(removeCartItem(productId));
   };
 
   useEffect(() => {
+    const { token: cancelToken, cancel } = axios.CancelToken.source();
+
     const timeOutID = setTimeout(() => {
       if (Math.random() > 0.5) {
         setIsValidCouponCode(true);
       } else {
         setIsValidCouponCode(false);
       }
-      // axios
-      //   .get(`${server}/api/v1/payment/discount?coupon=${couponCode}`, {
-      //     cancelToken,
-      //   })
-      //   .then((res) => {
-      //     dispatch(discountApplied(res.data.discount));
-      //     setIsValidCouponCode(true);
-      //     dispatch(calculatePrice());
-      //   })
-      //   .catch(() => {
-      //     dispatch(discountApplied(0));
-      //     setIsValidCouponCode(false);
-      //     dispatch(calculatePrice());
-      // });
+      axios
+        .get(`${server}/api/v1/payment/discount?coupon=${couponCode}`, {
+          cancelToken,
+        })
+        .then((res) => {
+          // dispatch(discountApplied(res.data.discount));
+          setIsValidCouponCode(true);
+          dispatch(calculatePrice());
+        })
+        .catch(() => {
+          // dispatch(discountApplied(0));
+          setIsValidCouponCode(false);
+          dispatch(calculatePrice());
+        });
     }, 1000);
 
     return () => {
       clearTimeout(timeOutID);
       setIsValidCouponCode(false);
-      // cancel();
+      cancel();
     };
   }, [couponCode]);
+
+  useEffect(() => {
+    dispatch(calculatePrice());
+  }, [cartItems]);
+
   return (
     <div className="cart">
       <main>
         {cartItems.length > 0 ? (
           cartItems.map((item: TCartItem, index: number) => (
             <CartItemCard
-              incrementHandler={incrementHandler}
-              decrementHandler={decrementHandler}
-              removeHandler={removeHandler}
+              incrementHandler={handleIncrement}
+              decrementHandler={handleDecrement}
+              removeHandler={handleRemove}
               key={index}
               cartItem={item}
             />
@@ -102,7 +87,7 @@ const Cart = () => {
         )}
       </main>
       <aside>
-        <p>Subtotal: ₹{subTotal}</p>
+        <p>Subtotal: ₹{subtotal}</p>
         <p>Shipping Charges: ₹{shippingCharges}</p>
         <p>Tax: ₹{tax}</p>
         <p>

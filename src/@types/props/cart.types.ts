@@ -1,14 +1,4 @@
-import { TProductsProps } from "./product.types";
-
-export type TCartItem = {
-  productId: string;
-  photo: string;
-  name: string;
-  price: number;
-  stock: number;
-  //   handler: (cartItem: CartItem) => string | undefined;
-  quantity: number;
-};
+import { TCartItem } from "../interfaces/cart.types";
 
 export type TCartItemProps = {
   cartItem: TCartItem;
