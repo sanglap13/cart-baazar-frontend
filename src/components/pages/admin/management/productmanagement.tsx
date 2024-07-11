@@ -4,7 +4,11 @@ import AdminSidebar from "../../../../components/shared/admin/AdminSidebar";
 import { useSelector } from "react-redux";
 import { RootState, server } from "../../../../redux/store";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { useProductDetailsQuery } from "../../../../redux/api/productApi";
+import {
+  useDeleteProductMutation,
+  useProductDetailsQuery,
+  useUpdateProductMutation,
+} from "../../../../redux/api/productApi";
 import { responseToast } from "../../../../utils/commonFunctions/responseToast";
 import { Skeleton } from "../../../shared/loader/Loader";
 
@@ -42,6 +46,9 @@ const Productmanagement = () => {
   const [photoUpdate, setPhotoUpdate] = useState<string>(photo);
   const [photoFile, setPhotoFile] = useState<File>();
 
+  const [updateProduct] = useUpdateProductMutation();
+  const [deleteProduct] = useDeleteProductMutation();
+
   const handleImgChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file: File | undefined = e.target.files?.[0];
 
@@ -58,7 +65,7 @@ const Productmanagement = () => {
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // setBtnLoading(true);
@@ -76,18 +83,27 @@ const Productmanagement = () => {
       //       formData.append("photos", file);
       //     });
       //   }
-      //   const res = await updateProduct({
-      //     formData,
-      //     userId: user?._id!,
-      //     productId: data?.product._id!,
-      //   });
-      //   responseToast(res, navigate, "/admin/product");
+      const res = await updateProduct({
+        formData,
+        userId: user?._id!,
+        productId: data?.product._id!,
+      });
+      responseToast(res, navigate, "/admin/product");
     } catch (error) {
       console.log(error);
     }
     // finally {
     //   setBtnLoading(false);
     // }
+  };
+
+  const handleDelete = async () => {
+    const res = await deleteProduct({
+      userId: user?._id!,
+      productId: data?.product._id!,
+    });
+
+    responseToast(res, navigate, "/admin/product");
   };
 
   useEffect(() => {
@@ -122,7 +138,7 @@ const Productmanagement = () => {
               <h3>₹{price}</h3>
             </section>
             <article>
-              <button className="product-delete-btn">
+              <button className="product-delete-btn" onClick={handleDelete}>
                 <FaTrash />
               </button>
               <form onSubmit={handleSubmit}>

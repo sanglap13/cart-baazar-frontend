@@ -44,6 +44,17 @@ export type TProductResponse = {
   success: boolean;
   product: TProduct;
 };
+
+export type TUpdateProductRequest = {
+  userId: string;
+  productId: string;
+  formData: FormData;
+};
+
+export type TDeleteProductRequest = {
+  userId: string;
+  productId: string;
+};
 // export type AllReviewsResponse = {
 //   success: boolean;
 //   reviews: Review[];
@@ -105,16 +116,6 @@ export type TSearchProductsRequest = {
 // export type DeleteReviewRequest = {
 //   userId?: string;
 //   reviewId: string;
-// };
-
-// export type UpdateProductRequest = {
-//   userId: string;
-//   productId: string;
-//   formData: FormData;
-// };
-// export type DeleteProductRequest = {
-//   userId: string;
-//   productId: string;
 // };
 
 // export type NewOrderRequest = {

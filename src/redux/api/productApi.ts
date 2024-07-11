@@ -2,11 +2,13 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   TAllProductsResponse,
   TCategoriesResponse,
+  TDeleteProductRequest,
   TMessageResponse,
   TNewProductRequest,
   TProductResponse,
   TSearchProductsRequest,
   TSearchProductsResponse,
+  TUpdateProductRequest,
 } from "../../@types/api/api.types";
 
 export const productAPI = createApi({
@@ -75,21 +77,21 @@ export const productAPI = createApi({
       }),
       invalidatesTags: ["product"],
     }),
-    // updateProduct: builder.mutation<MessageResponse, UpdateProductRequest>({
-    //   query: ({ formData, userId, productId }) => ({
-    //     url: `${productId}?id=${userId}`,
-    //     method: "PUT",
-    //     body: formData,
-    //   }),
-    //   invalidatesTags: ["product"],
-    // }),
-    // deleteProduct: builder.mutation<MessageResponse, DeleteProductRequest>({
-    //   query: ({ userId, productId }) => ({
-    //     url: `${productId}?id=${userId}`,
-    //     method: "DELETE",
-    //   }),
-    //   invalidatesTags: ["product"],
-    // }),
+    updateProduct: builder.mutation<TMessageResponse, TUpdateProductRequest>({
+      query: ({ formData, userId, productId }) => ({
+        url: `${productId}?id=${userId}`,
+        method: "PUT",
+        body: formData,
+      }),
+      invalidatesTags: ["product"],
+    }),
+    deleteProduct: builder.mutation<TMessageResponse, TDeleteProductRequest>({
+      query: ({ userId, productId }) => ({
+        url: `${productId}?id=${userId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["product"],
+    }),
   }),
 });
 
@@ -103,6 +105,6 @@ export const {
   //   useDeleteReviewMutation,
   useNewProductMutation,
   useProductDetailsQuery,
-  //   useUpdateProductMutation,
-  //   useDeleteProductMutation,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
 } = productAPI;
