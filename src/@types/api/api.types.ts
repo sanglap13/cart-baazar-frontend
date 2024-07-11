@@ -39,6 +39,11 @@ export type TNewProductRequest = {
   id: string;
   formData: FormData;
 };
+
+export type TProductResponse = {
+  success: boolean;
+  product: TProduct;
+};
 // export type AllReviewsResponse = {
 //   success: boolean;
 //   reviews: Review[];
@@ -60,10 +65,6 @@ export type TSearchProductsRequest = {
   search: string;
   sort: string;
 };
-// export type ProductResponse = {
-//   success: boolean;
-//   product: Product;
-// };
 
 // export type AllOrdersResponse = {
 //   success: boolean;

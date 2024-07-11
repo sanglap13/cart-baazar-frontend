@@ -4,6 +4,7 @@ import {
   TCategoriesResponse,
   TMessageResponse,
   TNewProductRequest,
+  TProductResponse,
   TSearchProductsRequest,
   TSearchProductsResponse,
 } from "../../@types/api/api.types";
@@ -40,10 +41,10 @@ export const productAPI = createApi({
       },
       providesTags: ["product"],
     }),
-    // productDetails: builder.query<TProductResponse, string>({
-    //   query: (id) => id,
-    //   providesTags: ["product"],
-    // }),
+    productDetails: builder.query<TProductResponse, string>({
+      query: (id) => id,
+      providesTags: ["product"],
+    }),
     // allReviewsOfProducts: builder.query<AllReviewsResponse, string>({
     //   query: (productId) => `reviews/${productId}`,
     //   providesTags: ["product"],
@@ -101,7 +102,7 @@ export const {
   //   useNewReviewMutation,
   //   useDeleteReviewMutation,
   useNewProductMutation,
-  //   useProductDetailsQuery,
+  useProductDetailsQuery,
   //   useUpdateProductMutation,
   //   useDeleteProductMutation,
 } = productAPI;
