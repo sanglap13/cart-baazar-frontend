@@ -7,6 +7,7 @@ import { TCartItem } from "../../../@types/interfaces/cart.types";
 import {
   addToCart,
   calculatePrice,
+  discountApplied,
   removeCartItem,
 } from "../../../redux/reducer/cartReducer";
 import { RootState, server } from "../../../redux/store";
@@ -47,12 +48,12 @@ const Cart = () => {
           cancelToken,
         })
         .then((res) => {
-          // dispatch(discountApplied(res.data.discount));
+          dispatch(discountApplied(res.data.discount));
           setIsValidCouponCode(true);
           dispatch(calculatePrice());
         })
         .catch(() => {
-          // dispatch(discountApplied(0));
+          dispatch(discountApplied(0));
           setIsValidCouponCode(false);
           dispatch(calculatePrice());
         });
