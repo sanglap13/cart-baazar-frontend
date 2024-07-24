@@ -1,4 +1,7 @@
+import { TCartItem } from "../interfaces/cart.types";
+import { TOrder } from "../interfaces/order.types";
 import { TProduct } from "../interfaces/product.types";
+import { TShippingInfo } from "../interfaces/shipping.types";
 import { TUser } from "../interfaces/user.types";
 
 export type TCustomError = {
@@ -77,14 +80,31 @@ export type TSearchProductsRequest = {
   sort: string;
 };
 
-// export type AllOrdersResponse = {
-//   success: boolean;
-//   orders: Order[];
-// };
-// export type OrderDetailsResponse = {
-//   success: boolean;
-//   order: Order;
-// };
+// ===========================orders=============================
+export type TAllOrdersResponse = {
+  success: boolean;
+  orders: TOrder[];
+};
+export type TOrderDetailsResponse = {
+  success: boolean;
+  order: TOrder;
+};
+
+export type TUpdateOrderRequest = {
+  userId: string;
+  orderId: string;
+};
+
+export type TNewOrderRequest = {
+  shippingInfo: TShippingInfo;
+  orderItems: TCartItem[];
+  subtotal: number;
+  tax: number;
+  shippingCharges: number;
+  discount: number;
+  total: number;
+  user: string;
+};
 
 // export type StatsResponse = {
 //   success: boolean;
@@ -116,22 +136,6 @@ export type TSearchProductsRequest = {
 // export type DeleteReviewRequest = {
 //   userId?: string;
 //   reviewId: string;
-// };
-
-// export type NewOrderRequest = {
-//   shippingInfo: ShippingInfo;
-//   orderItems: CartItem[];
-//   subtotal: number;
-//   tax: number;
-//   shippingCharges: number;
-//   discount: number;
-//   total: number;
-//   user: string;
-// };
-
-// export type UpdateOrderRequest = {
-//   userId: string;
-//   orderId: string;
 // };
 
 // export type DeleteUserRequest = {
