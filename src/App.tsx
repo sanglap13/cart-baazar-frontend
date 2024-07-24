@@ -131,8 +131,8 @@ const App = () => {
               path="/admin/transaction/:id"
               element={<TransactionManagement />}
             />
-            <Route path="*" element={<NotFound />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
       <Toaster position="bottom-center" />
