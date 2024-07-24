@@ -6,3 +6,4 @@ export { default as Login } from "./login/Login";
 export { default as Orders } from "./orders/Orders";
 export { default as OrderDetails } from "./orderDetails/OrderDetails";
 export { default as NotFound } from "./notFound/NotFound";
+export { default as Checkout } from "./checkout/Checkout";
