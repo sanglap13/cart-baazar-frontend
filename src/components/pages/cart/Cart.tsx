@@ -4,13 +4,13 @@ import { VscError } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { TCartItem } from "../../../@types/interfaces/cart.types";
-import { RootState, server } from "../../../redux/store";
-import { CartItemCard } from "../../shared";
 import {
   addToCart,
   calculatePrice,
   removeCartItem,
 } from "../../../redux/reducer/cartReducer";
+import { RootState, server } from "../../../redux/store";
+import { CartItemCard } from "../../shared";
 
 const Cart = () => {
   const { cartItems, subtotal, tax, total, shippingCharges, discount } =
