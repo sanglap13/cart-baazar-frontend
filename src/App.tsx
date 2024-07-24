@@ -50,6 +50,7 @@ const OrderDetails = lazy(
   () => import("./components/pages/orderDetails/OrderDetails")
 );
 const NotFound = lazy(() => import("./components/pages/notFound/NotFound"));
+const Checkout = lazy(() => import("./components/pages/checkout/Checkout"));
 
 const App = () => {
   const { user, loading } = useSelector(
@@ -96,6 +97,7 @@ const App = () => {
             <Route path="/shipping" element={<Shipping />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/orders/:id" element={<OrderDetails />} />
+            <Route path="/pay" element={<Checkout />} />
           </Route>
 
           {/* admin routes*/}
