@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { TCartItem } from "../../../@types/interfaces/cart.types";
 import { TCustomError } from "../../../@types/api/api.types";
 import { Skeleton } from "../../shared/loader/Loader";
+import { addToCart } from "../../../redux/reducer/cartReducer";
 
 const Search = () => {
   const searchQuery = useSearchParams()[0];
@@ -44,7 +45,7 @@ const Search = () => {
 
   const handleAddToCart = (cartItem: TCartItem) => {
     if (cartItem.stock < 1) return toast.error("Out of Stock");
-    // dispatch(addToCart(cartItem));
+    dispatch(addToCart(cartItem));
     toast.success("Added to cart");
   };
 
