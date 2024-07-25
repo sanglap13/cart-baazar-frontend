@@ -3,26 +3,27 @@ import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { TCustomError } from "../../../@types/api/api.types";
-import { TableDataType } from "../../../@types/interfaces/order.types";
+
 import { columnHeadings } from "../../../constants/tableHeadings";
 import { useMyOrdersQuery } from "../../../redux/api/orderApi";
 import { RootState } from "../../../redux/store";
 import TableHOC from "../../shared/admin/TableHOC";
 import { Skeleton } from "../../shared/loader/Loader";
+import { TTableDataType } from "../../../@types/interfaces/admin.types";
 
 const Orders = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
   const { isLoading, data, isError, error } = useMyOrdersQuery(user?._id!);
 
-  const [rows, setRows] = useState<TableDataType[]>([]);
+  const [rows, setRows] = useState<TTableDataType[]>([]);
 
   if (isError) {
     const err = error as TCustomError;
     toast.error(err.data.message);
   }
 
-  const Table = TableHOC<TableDataType>(
+  const Table = TableHOC<TTableDataType>(
     columnHeadings,
     rows,
     "dashboard-product-box",
