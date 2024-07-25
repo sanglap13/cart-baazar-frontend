@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { ProductCard } from "../../shared";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { TCustomError } from "../../../@types/api/api.types";
+import { TCartItem } from "../../../@types/interfaces/cart.types";
 import {
   useCategoriesQuery,
   useSearchProductsQuery,
 } from "../../../redux/api/productApi";
-import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import { TCartItem } from "../../../@types/interfaces/cart.types";
-import { TCustomError } from "../../../@types/api/api.types";
-import { Skeleton } from "../../shared/loader/Loader";
 import { addToCart } from "../../../redux/reducer/cartReducer";
+import { ProductCard } from "../../shared";
+import { Skeleton } from "../../shared/loader/Loader";
 
 const Search = () => {
   const searchQuery = useSearchParams()[0];
@@ -18,7 +18,7 @@ const Search = () => {
   const [search, setSearch] = useState<string>("");
   const [sort, setSort] = useState<string>("");
   const [maxPrice, setMaxPrice] = useState<number>(100000);
-  const [category, setCategory] = useState<string>("");
+  const [category, setCategory] = useState(searchQuery.get("category") || "");
   const [page, setPage] = useState<number>(1);
 
   const {

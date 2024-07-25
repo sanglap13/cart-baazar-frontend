@@ -123,7 +123,9 @@ const NewProduct = () => {
             </div>
 
             {photoPrev && <img src={photoPrev} alt="New Image" />}
-            <button type="submit">Create</button>
+            <button disabled={isLoading} type="submit">
+              Create
+            </button>
           </form>
         </article>
       </main>

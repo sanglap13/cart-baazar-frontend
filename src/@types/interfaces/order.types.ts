@@ -1,4 +1,3 @@
-import { ReactElement } from "react";
 import { TCartItem } from "./cart.types";
 import { TShippingInfo } from "./shipping.types";
 

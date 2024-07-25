@@ -12,9 +12,6 @@ import {
 import { responseToast } from "../../../../utils/commonFunctions/responseToast";
 import { Skeleton } from "../../../shared/loader/Loader";
 
-const img =
-  "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=804";
-
 const Productmanagement = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
@@ -23,15 +20,14 @@ const Productmanagement = () => {
 
   const { data, isLoading, isError } = useProductDetailsQuery(params.id!);
 
-  const { price, photo, name, stock, category, description } =
-    data?.product || {
-      photo: "",
-      category: "",
-      name: "",
-      stock: 0,
-      price: 0,
-      description: "",
-    };
+  const { price, photo, name, stock, category } = data?.product || {
+    photo: "",
+    category: "",
+    name: "",
+    stock: 0,
+    price: 0,
+    description: "",
+  };
 
   // const [price, setPrice] = useState<number>(2000);
   // const [stock, setStock] = useState<number>(10);
@@ -45,6 +41,8 @@ const Productmanagement = () => {
   const [categoryUpdate, setCategoryUpdate] = useState<string>(category);
   const [photoUpdate, setPhotoUpdate] = useState<string>(photo);
   const [photoFile, setPhotoFile] = useState<File>();
+  // const [descriptionUpdate, setDescriptionUpdate] =
+  //   useState<string>(description);
 
   const [updateProduct] = useUpdateProductMutation();
   const [deleteProduct] = useDeleteProductMutation();
@@ -72,7 +70,7 @@ const Productmanagement = () => {
     try {
       const formData = new FormData();
       if (nameUpdate) formData.set("name", nameUpdate);
-      //   if (descriptionUpdate) formData.set("description", descriptionUpdate);
+      // if (descriptionUpdate) formData.set("description", descriptionUpdate);
       if (priceUpdate) formData.set("price", priceUpdate.toString());
       if (stockUpdate !== undefined)
         formData.set("stock", stockUpdate.toString());
