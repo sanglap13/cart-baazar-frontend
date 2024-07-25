@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { TMessageResponse, TUserResponse } from "../../@types/api/api.types";
+import {
+  TAllUsersResponse,
+  TDeleteUserRequest,
+  TMessageResponse,
+  TUserResponse,
+} from "../../@types/api/api.types";
 import { TUser } from "../../@types/interfaces/user.types";
 import axios from "axios";
 
@@ -19,18 +24,18 @@ export const userAPI = createApi({
       invalidatesTags: ["users"],
     }),
 
-    //     deleteUser: builder.mutation<TMessageResponse, DeleteUserRequest>({
-    //       query: ({ userId, adminUserId }) => ({
-    //         url: `${userId}?id=${adminUserId}`,
-    //         method: "DELETE",
-    //       }),
-    //       invalidatesTags: ["users"],
-    //     }),
+    deleteUser: builder.mutation<TMessageResponse, TDeleteUserRequest>({
+      query: ({ userId, adminUserId }) => ({
+        url: `${userId}?id=${adminUserId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["users"],
+    }),
 
-    //     allUsers: builder.query<AllUsersResponse, string>({
-    //       query: (id) => `all?id=${id}`,
-    //       providesTags: ["users"],
-    //     }),
+    allUsers: builder.query<TAllUsersResponse, string>({
+      query: (id) => `all?id=${id}`,
+      providesTags: ["users"],
+    }),
   }),
 });
 
@@ -46,4 +51,5 @@ export const getUser = async (id: string) => {
   }
 };
 
-export const { useLoginMutation } = userAPI;
+export const { useLoginMutation, useAllUsersQuery, useDeleteUserMutation } =
+  userAPI;

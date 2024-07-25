@@ -1,7 +1,10 @@
 import { Column } from "react-table";
-import { TableDataType } from "../@types/interfaces/order.types";
+import {
+  ICustomerTableDataType,
+  TTableDataType,
+} from "../@types/interfaces/admin.types";
 
-export const columnHeadings: Column<TableDataType>[] = [
+export const columnHeadings: Column<TTableDataType>[] = [
   {
     Header: "ID",
     accessor: "_id",
@@ -21,6 +24,33 @@ export const columnHeadings: Column<TableDataType>[] = [
   {
     Header: "Status",
     accessor: "status",
+  },
+  {
+    Header: "Action",
+    accessor: "action",
+  },
+];
+
+export const customerColumns: Column<ICustomerTableDataType>[] = [
+  {
+    Header: "Avatar",
+    accessor: "avatar",
+  },
+  {
+    Header: "Name",
+    accessor: "name",
+  },
+  {
+    Header: "Gender",
+    accessor: "gender",
+  },
+  {
+    Header: "Email",
+    accessor: "email",
+  },
+  {
+    Header: "Role",
+    accessor: "role",
   },
   {
     Header: "Action",
