@@ -2,15 +2,6 @@ import { ReactElement } from "react";
 import { TCartItem } from "./cart.types";
 import { TShippingInfo } from "./shipping.types";
 
-export type TableDataType = {
-  _id: string;
-  amount: number;
-  quantity: number;
-  discount: number;
-  status: ReactElement;
-  action: ReactElement;
-};
-
 export type TOrderItem = Omit<TCartItem, "stock"> & { _id: string };
 
 export type TOrder = {

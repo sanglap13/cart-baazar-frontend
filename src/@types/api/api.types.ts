@@ -16,21 +16,21 @@ export type TMessageResponse = {
   success: boolean;
   message: string;
 };
-
+//=============================users============================
 export type TUserResponse = {
   success: boolean;
   user: TUser;
 };
 
-// export type AllUsersResponse = {
-//   success: boolean;
-//   users: User[];
-// };
+export type TAllUsersResponse = {
+  success: boolean;
+  users: TUser[];
+};
 
-// export type UserResponse = {
-//   success: boolean;
-//   user: User;
-// };
+export type TDeleteUserRequest = {
+  userId: string;
+  adminUserId: string;
+};
 
 //=============================products============================
 export type TAllProductsResponse = {
@@ -136,11 +136,6 @@ export type TNewOrderRequest = {
 // export type DeleteReviewRequest = {
 //   userId?: string;
 //   reviewId: string;
-// };
-
-// export type DeleteUserRequest = {
-//   userId: string;
-//   adminUserId: string;
 // };
 
 // export type AllDiscountResponse = {
