@@ -1,7 +1,9 @@
 import { TCartItem } from "../interfaces/cart.types";
+import { TBar, TLine, TPie } from "../interfaces/charts.types";
 import { TOrder } from "../interfaces/order.types";
 import { TProduct } from "../interfaces/product.types";
 import { TShippingInfo } from "../interfaces/shipping.types";
+import { TStats } from "../interfaces/stats.types";
 import { TUser } from "../interfaces/user.types";
 
 export type TCustomError = {
@@ -106,25 +108,26 @@ export type TNewOrderRequest = {
   user: string;
 };
 
-// export type StatsResponse = {
-//   success: boolean;
-//   stats: Stats;
-// };
+// ===========================dashboard=============================
+export type TStatsResponse = {
+  success: boolean;
+  stats: TStats;
+};
 
-// export type PieResponse = {
-//   success: boolean;
-//   charts: Pie;
-// };
+export type TPieResponse = {
+  success: boolean;
+  charts: TPie;
+};
 
-// export type BarResponse = {
-//   success: boolean;
-//   charts: Bar;
-// };
+export type TBarResponse = {
+  success: boolean;
+  charts: TBar;
+};
 
-// export type LineResponse = {
-//   success: boolean;
-//   charts: Line;
-// };
+export type TLineResponse = {
+  success: boolean;
+  charts: TLine;
+};
 
 // export type NewReviewRequest = {
 //   rating: number;
