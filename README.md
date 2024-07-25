@@ -52,7 +52,7 @@ This is the frontend repository for Cart Baazar, an innovative e-commerce platfo
 
   VITE_APP_ID=from firebase
 
-  VITE_MEASUREMENT_ID=from firebase
+  VITE_MEASUREMENT_ID=from firebase(optional only for G-Analytics)
 
   VITE_SERVER=backend server url (can be localhost or deployed url)
 
