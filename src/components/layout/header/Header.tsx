@@ -1,5 +1,6 @@
 import { signOut } from "firebase/auth";
-import React, { useState } from "react";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import {
   FaSearch,
   FaShoppingBag,
@@ -10,7 +11,6 @@ import {
 import { Link } from "react-router-dom";
 import { IHeaderProps } from "../../../@types/props/header.types";
 import { auth } from "../../../config/firebase.config";
-import toast from "react-hot-toast";
 
 const Header = ({ user }: IHeaderProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
