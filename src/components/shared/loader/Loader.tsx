@@ -1,4 +1,3 @@
-import React from "react";
 import { SkeletonLoader } from "../../../@types/interfaces/loader.types";
 
 const Loader = () => {

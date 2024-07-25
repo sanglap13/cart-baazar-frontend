@@ -1,8 +1,7 @@
 import React from "react";
-import { TProductsProps } from "../../../@types/props/product.types";
 import { FaExpandAlt, FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { transformImage } from "../../../utils/tranformImage";
+import { TProductsProps } from "../../../@types/props/product.types";
 import { server } from "../../../redux/store";
 
 const ProductCard: React.FC<TProductsProps> = ({
