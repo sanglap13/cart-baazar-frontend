@@ -61,7 +61,7 @@ This is the frontend repository for Cart Baazar, an innovative e-commerce platfo
 
 Fill each field with your respective information
 
-3. Build backend
+3. Build frontend
 
 For **Dev**:
 
